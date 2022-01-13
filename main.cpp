@@ -1,4 +1,5 @@
 #include <QApplication>
+#include "mainForm.h"
 
 int main(int argc, char** argv)
 {

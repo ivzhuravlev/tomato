@@ -12,6 +12,8 @@ find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
 
 add_executable(tomato 
     main.cpp
+    mainForm.h
+    mainForm.cpp
 )
 
 target_link_libraries(tomato Qt5::Core Qt5::Widgets)

@@ -1,13 +1,18 @@
 #pragma once
-#include <QWidget>
+#include <QMainWindow>
 #include <memory>
 
-class MainForm : public QWidget
+namespace Ui {
+    class MainForm;
+}
+
+class MainForm : public QMainWindow
 {
     Q_OBJECT
 public:
     explicit MainForm(QWidget* parent = nullptr);
+    ~MainForm();
 
 private:
-    std::unique_ptr<Ui::MainForm> ui;
-}
+    Ui::MainForm* ui;
+};
