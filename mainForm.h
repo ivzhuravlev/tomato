@@ -1,6 +1,5 @@
 #pragma once
 #include <QMainWindow>
-#include <memory>
 
 namespace Ui {
     class MainForm;
