@@ -3,11 +3,12 @@
 #include <QTime>
 
 class QTimer;
+class QStateMachine;
 
 struct TimerSettings
 {
-    int pomoLength = 25;         // 25 min
-    int shortRestLength = 5;    // 5 min
+    int pomoLength = 2;         // 25 min
+    int shortRestLength = 1;    // 5 min
     int longRestLength = 15;     // 15 min
     int pomoTillRest = 5;       // 5 items
 };
@@ -21,6 +22,7 @@ public:
 
 signals:
     void currentTime(const QString& time);
+    void nextState();
 
 public slots:
     void start();
@@ -29,12 +31,16 @@ public slots:
 
 private slots:
     void onTimer();
-
+    void setPomoState();
+    void setRestState();
+    void setStopState();
 
 private:
-    void init();
+    void resetTime();
 
     QTime currentTime_;
-    QTimer* timer_;
     TimerSettings settings_;
+
+    QTimer* timer_;
+    QStateMachine* stateMachine_;
 };

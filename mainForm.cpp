@@ -6,7 +6,7 @@ MainForm::MainForm(QWidget* parent) :
     QMainWindow(parent), ui(new Ui::MainForm)
 {
     ui->setupUi(this);
-    ui->timerDisplay->display(QString("25:00"));
+    ui->timerDisplay->display(QString("--:--"));
 
     TimerSettings settings;
     PomodoroTimer* pomoTimer = new PomodoroTimer(settings, this);
