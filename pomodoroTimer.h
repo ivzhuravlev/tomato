@@ -5,6 +5,14 @@
 class QTimer;
 class QStateMachine;
 
+enum class PomodoroState
+{
+    Pomodoro,
+    ShortPause,
+    LongPause,
+    Stop
+};
+
 struct TimerSettings
 {
     int pomoLength = 2;         // 25 min
