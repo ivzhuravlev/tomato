@@ -1,7 +1,7 @@
 #include "clock.h"
 #include <QTimer>
 
-Clock::Clock(const QTime& time, QObject* parent = nullptr) :
+Clock::Clock(const QTime& time, QObject* parent) :
     time_(time)
 {
     timer_ = new QTimer(this);

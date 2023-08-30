@@ -11,6 +11,7 @@ MainForm::MainForm(QWidget* parent) :
     TimerSettings settings;
     PomodoroTimer* pomoTimer = new PomodoroTimer(settings, this);
 
+    // TODO вынести изменения в форме в отдельный слот
     connect(pomoTimer, &PomodoroTimer::currentTime,
             ui->timerDisplay, qOverload<const QString&>(&QLCDNumber::display));
     connect(ui->startButton, &QPushButton::clicked, pomoTimer, &PomodoroTimer::start);

@@ -7,9 +7,8 @@ class QStateMachine;
 
 enum class PomodoroState
 {
-    Pomodoro,
-    ShortPause,
-    LongPause,
+    Pomo,
+    Break,
     Stop
 };
 
@@ -29,7 +28,7 @@ public:
     PomodoroTimer(const TimerSettings& s, QObject* parent = nullptr);
 
 signals:
-    void currentTime(const QString& time);
+    void currentTime(const QString& time, PomodoroState state);
     void nextState();
 
 public slots:
@@ -47,6 +46,7 @@ private:
     void resetTime();
 
     QTime currentTime_;
+    PomodoroState currentState_;
     TimerSettings settings_;
 
     QTimer* timer_;
