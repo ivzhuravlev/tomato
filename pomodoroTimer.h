@@ -4,6 +4,7 @@
 
 class QTimer;
 class QStateMachine;
+class QMediaPlayer;
 
 enum class PomodoroState
 {
@@ -14,7 +15,7 @@ enum class PomodoroState
 
 struct TimerSettings
 {
-    int pomoLength = 2;         // 25 min
+    int pomoLength = 1;         // 25 min
     int shortRestLength = 1;    // 5 min
     int longRestLength = 15;     // 15 min
     int pomoTillRest = 5;       // 5 items
@@ -51,4 +52,5 @@ private:
 
     QTimer* timer_;
     QStateMachine* stateMachine_;
+    QMediaPlayer* player_;
 };

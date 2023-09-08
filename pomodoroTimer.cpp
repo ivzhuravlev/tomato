@@ -3,6 +3,8 @@
 #include <QTimer>
 #include <QStateMachine>
 #include <QFinalState>
+#include <QMediaPlayer>
+#include <QFileInfo>
 
 static const QString timeFormat_ = QString("mm:ss");
 
@@ -15,12 +17,12 @@ void PomodoroTimer::resetTime()
 PomodoroTimer::PomodoroTimer(const TimerSettings& s, QObject* parent) :
     settings_(s), QObject(parent)
 {
+    // Timer Init   
     timer_ = new QTimer(this);
     timer_->setInterval(1000);
     connect(timer_, &QTimer::timeout, this, &PomodoroTimer::onTimer);
 
-    currentState_ = PomodoroState::Stop;
-
+    // State Machine Init
     stateMachine_ = new QStateMachine(this);
 
     QState* pomoState = new QState();
@@ -38,6 +40,15 @@ PomodoroTimer::PomodoroTimer(const TimerSettings& s, QObject* parent) :
     stateMachine_->addState(restState);
     stateMachine_->addState(stopState);
     stateMachine_->setInitialState(pomoState);
+
+    currentState_ = PomodoroState::Stop;
+
+    // Media Player Init
+    player_ = new QMediaPlayer(this, QMediaPlayer::LowLatency);
+    QUrl bellFile = QUrl::fromLocalFile(QFileInfo("bell_long.wav").absoluteFilePath());
+    player_->setMedia(bellFile);
+    connect(restState, &QAbstractState::entered, player_, &QMediaPlayer::play);
+    connect(stopState, &QAbstractState::entered, player_, &QMediaPlayer::play);
 }
 
 void PomodoroTimer::onTimer()
