@@ -16,6 +16,7 @@ MainForm::MainForm(QWidget* parent) :
             ui->timerDisplay, qOverload<const QString&>(&QLCDNumber::display));
     connect(ui->startButton, &QPushButton::clicked, pomoTimer, &PomodoroTimer::start);
     connect(ui->stopButton, &QPushButton::clicked, pomoTimer, &PomodoroTimer::stop);
+    connect(ui->pauseButton, &QPushButton::clicked, pomoTimer, &PomodoroTimer::pause);
 }
 
 MainForm::~MainForm()

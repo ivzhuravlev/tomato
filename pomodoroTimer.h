@@ -34,7 +34,7 @@ signals:
 public slots:
     void start();
     void stop();
-    //void pause();
+    void pause();
 
 private slots:
     void onTimer();

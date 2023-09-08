@@ -77,19 +77,20 @@ void PomodoroTimer::setStopState()
 void PomodoroTimer::start()
 {
     stateMachine_->start();
-
-    // resetTime();
-    // emit currentTime(currentTime_.toString(timeFormat_));
-    // timer_->start();
 }
 
 void PomodoroTimer::stop()
 {
     stateMachine_->stop();
     setStopState();
-    // timer_->stop();
-    // resetTime();
-    // emit currentTime(currentTime_.toString(timeFormat_));
 }
 
+void PomodoroTimer::pause()
+{
+    if (timer_->isActive()) {
+        timer_->stop();
+    } else {
+        timer_->start();
+    }
+}
 
