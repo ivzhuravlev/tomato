@@ -6,12 +6,10 @@
 #include <QMediaPlayer>
 #include <QFileInfo>
 
-static const QString timeFormat_ = QString("mm:ss");
-
 void PomodoroTimer::resetTime()
 {
     currentTime_.setHMS(0, settings_.pomoLength, 0);
-    emit currentTime(currentTime_.toString(timeFormat_), currentState_);
+    emit currentTime(currentTime_, currentState_);
 }
 
 PomodoroTimer::PomodoroTimer(const TimerSettings& s, QObject* parent) :
@@ -55,7 +53,7 @@ void PomodoroTimer::onTimer()
 {
     static const QTime zero(0, 0);
     currentTime_ = currentTime_.addSecs(-1);
-    emit currentTime(currentTime_.toString(timeFormat_), currentState_);
+    emit currentTime(currentTime_, currentState_);
     if (currentTime_ == zero) {
         emit nextState();
     }
@@ -65,7 +63,7 @@ void PomodoroTimer::setPomoState()
 {
     currentTime_.setHMS(0, settings_.pomoLength, 0);
     currentState_ = PomodoroState::Pomo;
-    emit currentTime(currentTime_.toString(timeFormat_), currentState_);
+    emit currentTime(currentTime_, currentState_);
     timer_->start();
 }
 
@@ -73,7 +71,7 @@ void PomodoroTimer::setRestState()
 {
     currentTime_.setHMS(0, settings_.shortRestLength, 0);
     currentState_ = PomodoroState::Break;
-    emit currentTime(currentTime_.toString(timeFormat_), currentState_);
+    emit currentTime(currentTime_, currentState_);
     timer_->start();
 }
 
@@ -82,7 +80,7 @@ void PomodoroTimer::setStopState()
     timer_->stop();
     currentTime_.setHMS(0, settings_.pomoLength, 0);
     currentState_ = PomodoroState::Stop;
-    emit currentTime(currentTime_.toString(timeFormat_), currentState_);
+    emit currentTime(currentTime_, currentState_);
 }
 
 void PomodoroTimer::start()

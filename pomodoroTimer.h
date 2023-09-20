@@ -29,7 +29,7 @@ public:
     PomodoroTimer(const TimerSettings& s, QObject* parent = nullptr);
 
 signals:
-    void currentTime(const QString& time, PomodoroState state);
+    void currentTime(const QTime& time, PomodoroState state);
     void nextState();
 
 public slots:
