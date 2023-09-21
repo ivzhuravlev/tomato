@@ -7,6 +7,21 @@
 #include <QMediaPlayer>
 #include <QFileInfo>
 
+namespace {
+
+void initPlayer(QMediaPlayer* p, bool first)
+{
+    if (first) {
+        p->setMuted(true);
+        p->play();
+    } else {
+        p->stop();
+        p->setMuted(false);
+    }
+}
+
+} // anonymous
+
 void PomodoroTimer::resetTime()
 {
     clock_->setTime(QTime(0, settings_.pomoLength));
@@ -47,6 +62,7 @@ PomodoroTimer::PomodoroTimer(const TimerSettings& s, QObject* parent) :
     player_->setMedia(bellFile);
     connect(restState, &QAbstractState::entered, player_, &QMediaPlayer::play);
     connect(stopState, &QAbstractState::entered, player_, &QMediaPlayer::play);
+    initPlayer(player_, true);
 }
 
 void PomodoroTimer::setTime(const QTime&)
@@ -83,6 +99,7 @@ void PomodoroTimer::setStopState()
 
 void PomodoroTimer::start()
 {
+    initPlayer(player_, false);
     stateMachine_->start();
 }
 
