@@ -44,12 +44,12 @@ private slots:
 
 private:
     void resetTime();
+    int restLength() const;
 
-    // QTime currentTime_;
     PomodoroState state_;
     TimerSettings settings_;
+    int pomo_ = 0;
 
-    // QTimer* timer_;
     QStateMachine* stateMachine_;
     QMediaPlayer* player_;
     Clock* clock_;

@@ -24,7 +24,6 @@ void initPlayer(QMediaPlayer* p, bool first)
 void PomodoroTimer::resetTime()
 {
     clock_->setTime(QTime(0, settings_.pomoLength));
-    emit status(clock_->getTime(), state_);
 }
 
 PomodoroTimer::PomodoroTimer(const TimerSettings& s, QObject* parent) :
@@ -75,6 +74,7 @@ void PomodoroTimer::setTime(const QTime&)
 void PomodoroTimer::setPomoState()
 {
     state_ = PomodoroState::Pomo;
+    ++pomo_;
     clock_->setTime(QTime(0, settings_.pomoLength));
     clock_->start();
 }
@@ -82,7 +82,7 @@ void PomodoroTimer::setPomoState()
 void PomodoroTimer::setRestState()
 {
     state_ = PomodoroState::Break;
-    clock_->setTime(QTime(0, settings_.shortRestLength));
+    clock_->setTime(QTime(0, restLength()));
     clock_->start();
 }
 
@@ -112,5 +112,16 @@ void PomodoroTimer::pause()
     } else {
         clock_->start();
     }
+}
+
+int PomodoroTimer::restLength() const
+{
+    int rest = 0;
+    if (pomo_ % settings_.pomoTillRest == 0) {
+        rest = settings_.longRestLength;
+    } else {
+        rest = settings_.shortRestLength;
+    }
+    return rest;
 }
 
