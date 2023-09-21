@@ -1,6 +1,5 @@
 #pragma once
 #include <QObject>
-#include <QTime>
 
 class QTimer;
 class QStateMachine;
@@ -19,7 +18,7 @@ struct TimerSettings
     int pomoLength = 1;         // 25 min
     int shortRestLength = 1;    // 5 min
     int longRestLength = 15;     // 15 min
-    int pomoTillRest = 5;       // 5 items
+    int pomoTillRest = 2;       // 5 items
 };
 
 class PomodoroTimer : public QObject
@@ -29,7 +28,7 @@ public:
     PomodoroTimer(const TimerSettings& s, QObject* parent = nullptr);
 
 signals:
-    void currentTime(const QTime& time, PomodoroState state); // change to status()
+    void status(const QTime& time, PomodoroState state);
     void nextState();
 
 public slots:

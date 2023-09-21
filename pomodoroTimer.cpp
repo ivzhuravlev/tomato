@@ -1,7 +1,6 @@
 #include "pomodoroTimer.h"
 #include "clock.h"
 #include <QTime>
-#include <QTimer>
 #include <QStateMachine>
 #include <QFinalState>
 #include <QMediaPlayer>
@@ -25,7 +24,7 @@ void initPlayer(QMediaPlayer* p, bool first)
 void PomodoroTimer::resetTime()
 {
     clock_->setTime(QTime(0, settings_.pomoLength));
-    emit currentTime(clock_->getTime(), state_);
+    emit status(clock_->getTime(), state_);
 }
 
 PomodoroTimer::PomodoroTimer(const TimerSettings& s, QObject* parent) :
@@ -67,7 +66,7 @@ PomodoroTimer::PomodoroTimer(const TimerSettings& s, QObject* parent) :
 
 void PomodoroTimer::setTime(const QTime&)
 {
-    emit currentTime(clock_->getTime(), state_);
+    emit status(clock_->getTime(), state_);
     if (clock_->isZero()) {
         emit nextState();
     }
@@ -75,26 +74,23 @@ void PomodoroTimer::setTime(const QTime&)
 
 void PomodoroTimer::setPomoState()
 {
-    clock_->setTime(QTime(0, settings_.pomoLength));
     state_ = PomodoroState::Pomo;
-    emit currentTime(clock_->getTime(), state_);
+    clock_->setTime(QTime(0, settings_.pomoLength));
     clock_->start();
 }
 
 void PomodoroTimer::setRestState()
 {
-    clock_->setTime(QTime(0, settings_.shortRestLength));
     state_ = PomodoroState::Break;
-    emit currentTime(clock_->getTime(), state_);
+    clock_->setTime(QTime(0, settings_.shortRestLength));
     clock_->start();
 }
 
 void PomodoroTimer::setStopState()
 {
     clock_->stop();
-    clock_->setTime(QTime(0, settings_.pomoLength));
     state_ = PomodoroState::Stop;
-    emit currentTime(clock_->getTime(), state_);
+    clock_->setTime(QTime(0, settings_.pomoLength));
 }
 
 void PomodoroTimer::start()

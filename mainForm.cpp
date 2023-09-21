@@ -1,5 +1,6 @@
 #include "mainForm.h"
 #include "ui_mainForm.h"
+#include <QTime>
 
 static const QString timeFormat = QString("mm:ss");
 
@@ -21,7 +22,7 @@ MainForm::MainForm(QWidget* parent) :
     TimerSettings settings;
     PomodoroTimer* pomoTimer = new PomodoroTimer(settings, this);
 
-    connect(pomoTimer, &PomodoroTimer::currentTime, this, &MainForm::setState);
+    connect(pomoTimer, &PomodoroTimer::status, this, &MainForm::setState);
     connect(ui->startButton, &QPushButton::clicked, pomoTimer, &PomodoroTimer::start);
     connect(ui->stopButton, &QPushButton::clicked, pomoTimer, &PomodoroTimer::stop);
     connect(ui->pauseButton, &QPushButton::clicked, pomoTimer, &PomodoroTimer::pause);
