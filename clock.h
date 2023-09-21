@@ -8,15 +8,21 @@ class Clock : public QObject
 {
     Q_OBJECT
 public:
+    explicit Clock(QObject* parent = nullptr);
     explicit Clock(const QTime& time, QObject* parent = nullptr);
+
     void setTime(const QTime&);
-    QTime time() const;
+    QTime getTime() const;
+
+    bool isZero() const;
+    bool isActive() const;
 
 signals:
     void time(const QTime&);
 
 public slots:
     void start();
+    // void pause();
     void stop();
 
 private slots:

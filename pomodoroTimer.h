@@ -5,6 +5,7 @@
 class QTimer;
 class QStateMachine;
 class QMediaPlayer;
+class Clock;
 
 enum class PomodoroState
 {
@@ -21,7 +22,6 @@ struct TimerSettings
     int pomoTillRest = 5;       // 5 items
 };
 
-
 class PomodoroTimer : public QObject
 {
     Q_OBJECT
@@ -29,7 +29,7 @@ public:
     PomodoroTimer(const TimerSettings& s, QObject* parent = nullptr);
 
 signals:
-    void currentTime(const QTime& time, PomodoroState state);
+    void currentTime(const QTime& time, PomodoroState state); // change to status()
     void nextState();
 
 public slots:
@@ -38,7 +38,7 @@ public slots:
     void pause();
 
 private slots:
-    void onTimer();
+    void setTime(const QTime&);
     void setPomoState();
     void setRestState();
     void setStopState();
@@ -46,11 +46,12 @@ private slots:
 private:
     void resetTime();
 
-    QTime currentTime_;
-    PomodoroState currentState_;
+    // QTime currentTime_;
+    PomodoroState state_;
     TimerSettings settings_;
 
-    QTimer* timer_;
+    // QTimer* timer_;
     QStateMachine* stateMachine_;
     QMediaPlayer* player_;
+    Clock* clock_;
 };
