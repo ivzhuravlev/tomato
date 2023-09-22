@@ -10,7 +10,9 @@ static const QString clockStylePomo = QString(
 static const QString clockStyleBreak = QString(
     "QLCDNumber { background: rgba(86,189,86,255); color: white }"
 );
-static const QString clockStyleStop = QString();
+static const QString clockStyleStop = QString(
+    "QLCDNumber { background: #DDA129; color: white }"
+);
 
 MainForm::MainForm(QWidget* parent) :
     QMainWindow(parent), ui(new Ui::MainForm)
