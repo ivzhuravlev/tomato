@@ -16,10 +16,10 @@ enum class PomodoroState
 
 struct TimerSettings
 {
-    int pomoLength = 1;         // 25 min
-    int shortRestLength = 1;    // 5 min
-    int longRestLength = 15;     // 15 min
-    int pomoTillRest = 5;       // 5 items
+    QTime pomoLength = QTime(0,1);      // 25 min
+    QTime shortRestLength = QTime(0,1); // 5 min
+    QTime longRestLength = QTime(0,15); // 15 min
+    int pomoTillRest = 5;               // 5 items
 };
 
 struct PomodoroStatus
@@ -52,7 +52,7 @@ private slots:
 
 private:
     void resetTime();
-    int restLength() const;
+    QTime restLength() const;
 
     PomodoroState state_;
     TimerSettings settings_;
