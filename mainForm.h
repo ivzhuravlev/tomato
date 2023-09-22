@@ -6,6 +6,8 @@ namespace Ui {
     class MainForm;
 }
 
+class QLabel;
+
 class MainForm : public QMainWindow
 {
     Q_OBJECT
@@ -14,8 +16,9 @@ public:
     ~MainForm();
 
 public slots:
-    void setState(const QTime& time, PomodoroState state);
+    void setState(const PomodoroStatus&);
 
 private:
     Ui::MainForm* ui;
+    QLabel* pomoCount;
 };

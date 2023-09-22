@@ -1,6 +1,5 @@
 #include "pomodoroTimer.h"
 #include "clock.h"
-#include <QTime>
 #include <QStateMachine>
 #include <QFinalState>
 #include <QMediaPlayer>
@@ -65,7 +64,7 @@ PomodoroTimer::PomodoroTimer(const TimerSettings& s, QObject* parent) :
 
 void PomodoroTimer::setTime(const QTime&)
 {
-    emit status(clock_->getTime(), state_);
+    emit status({clock_->getTime(), state_, pomo_});
     if (clock_->isZero()) {
         emit nextState();
     }
