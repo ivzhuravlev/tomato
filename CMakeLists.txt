@@ -18,6 +18,7 @@ add_executable(tomato
     pomodoroTimer.cpp
     clock.h
     clock.cpp
+    resources.qrc
 )
 
 target_link_libraries(tomato Qt5::Core Qt5::Widgets Qt5::Multimedia)

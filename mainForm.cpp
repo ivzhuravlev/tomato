@@ -3,6 +3,9 @@
 #include <QTime>
 #include <QStatusBar>
 #include <QLabel>
+#include <QAction>
+#include <QToolBar>
+#include <QMenu>
 
 static const QString timeFormat = QString("mm:ss");
 
@@ -31,8 +34,12 @@ MainForm::MainForm(QWidget* parent) :
     statusBar->addPermanentWidget(pomoLabel);
     statusBar->addPermanentWidget(pomoCount, 1);
     statusBar->setStyleSheet(statusBarStyle);
-
     this->setStatusBar(statusBar);
+    
+    QToolBar* toolBar = addToolBar("toolBar");
+    toolBar->setMovable(false);
+    QAction* settingsAct = new QAction(QIcon(":/res/settings.png"), QString(), this);
+    toolBar->addAction(settingsAct);
 
     connect(pomoTimer, &PomodoroTimer::status, this, &MainForm::setState);
     connect(ui->startButton, &QPushButton::clicked, pomoTimer, &PomodoroTimer::start);
