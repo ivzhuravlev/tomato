@@ -16,6 +16,9 @@ public:
     void saveWindowSettings(const QByteArray& geom, bool max);
     QByteArray loadWindowSettings(bool& max) const;
 
+    void saveDaySettings(int pomo);
+    int loadDaySettings();
+
 private:
     QSettings* settings_;
 };

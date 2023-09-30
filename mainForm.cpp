@@ -27,11 +27,13 @@ MainForm::MainForm(QWidget* parent) :
 
     settingsSeializer_= new SettingsSerializer(qApp->organizationName(), qApp->applicationName(), this);
     pomoTimer_ = new PomodoroTimer(settingsSeializer_->loadTimerSettings(), this);
+    pomoTimer_->setPomo(settingsSeializer_->loadDaySettings());
 
     QLabel* pomoLabel = new QLabel(QString::fromUtf8("Pomo: "));
     pomoLabel->setStyleSheet(labelBarStyle);
     pomoCount_ = new QLabel(QString());
     pomoCount_->setStyleSheet(labelBarStyle);
+    pomoCount_->setText(QString::number(pomoTimer_->pomo()));
 
     QStatusBar* statusBar = new QStatusBar();
     statusBar->addPermanentWidget(pomoLabel);
@@ -41,10 +43,15 @@ MainForm::MainForm(QWidget* parent) :
     
     QToolBar* toolBar = addToolBar("toolBar");
     toolBar->setMovable(false);
-    QAction* settingsAct = new QAction(QIcon(":/res/settings.png"), QString(), this);
+
+    QAction* resetAct = new QAction(QIcon(":/res/reset.svg"), QString());
+    resetAct->setToolTip("Reset pomo count");
+    connect(resetAct, &QAction::triggered, [this](){ this->pomoTimer_->setPomo(0); });
+    toolBar->addAction(resetAct);
+
+    QAction* settingsAct = new QAction(QIcon(":/res/settings.png"), QString());
     settingsAct->setText("&Settings");
     settingsAct->setToolTip("Settings");
-
     connect(settingsAct, &QAction::triggered, this, &MainForm::openSettingsDialog);
     toolBar->addAction(settingsAct);
 
@@ -68,6 +75,7 @@ MainForm::~MainForm()
 void MainForm::closeEvent(QCloseEvent * override)
 {
     settingsSeializer_->saveTimerSettings(pomoTimer_->settings());
+    settingsSeializer_->saveDaySettings(pomoTimer_->pomo());
     settingsSeializer_->saveWindowSettings(saveGeometry(), isMaximized());
 }
 

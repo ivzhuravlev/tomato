@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>res/settings.png</file>
+        <file>res/reset.svg</file>
     </qresource>
 </RCC>

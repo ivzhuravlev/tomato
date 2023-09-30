@@ -31,6 +31,9 @@ public:
     TimerSettings settings() const;
     void setSettings(const TimerSettings& s);
 
+    int pomo() const;
+    void setPomo(int);
+
 signals:
     void status(const PomodoroStatus& status);
     void nextState();

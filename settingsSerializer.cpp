@@ -51,3 +51,21 @@ TimerSettings SettingsSerializer::loadTimerSettings() const
         return TimerSettings{};
     }
 }
+
+void SettingsSerializer::saveDaySettings(int pomo)
+{
+    settings_->beginGroup("DaySettings");
+    settings_->setValue("CurrentDate", QDate::currentDate());
+    settings_->setValue("CurrentPomo", pomo);
+    settings_->endGroup();
+}
+
+int SettingsSerializer::loadDaySettings()
+{
+    const auto date = settings_->value("DaySettings/CurrentDate").toDate();
+    if (date != QDate::currentDate()) {
+        saveDaySettings(0);
+        return 0;
+    }
+    return settings_->value("DaySettings/CurrentPomo").toInt();
+}

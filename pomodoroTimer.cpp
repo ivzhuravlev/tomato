@@ -72,6 +72,17 @@ void PomodoroTimer::setSettings(const TimerSettings &s)
     settings_ = s;
 }
 
+int PomodoroTimer::pomo() const
+{
+    return pomo_;
+}
+
+void PomodoroTimer::setPomo(int p)
+{
+    pomo_ = p;
+    emit status({clock_->getTime(), state_, pomo_});
+}
+
 void PomodoroTimer::setTime(const QTime&)
 {
     emit status({clock_->getTime(), state_, pomo_});
