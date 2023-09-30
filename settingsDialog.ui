@@ -3,15 +3,21 @@
  <class>SettingsDialog</class>
  <widget class="QDialog" name="SettingsDialog">
   <property name="windowModality">
-   <enum>Qt::ApplicationModal</enum>
+   <enum>Qt::NonModal</enum>
   </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>300</height>
+    <height>270</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Settings</string>
@@ -27,7 +33,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QTimeEdit" name="pomoLengthEdit"/>
+      <widget class="QTimeEdit" name="pomoLengthEdit">
+       <property name="currentSection">
+        <enum>QDateTimeEdit::MinuteSection</enum>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -41,7 +51,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QTimeEdit" name="shortRestEdit"/>
+      <widget class="QTimeEdit" name="shortRestEdit">
+       <property name="currentSection">
+        <enum>QDateTimeEdit::MinuteSection</enum>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -55,7 +69,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QTimeEdit" name="longRestEdit"/>
+      <widget class="QTimeEdit" name="longRestEdit">
+       <property name="currentSection">
+        <enum>QDateTimeEdit::MinuteSection</enum>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

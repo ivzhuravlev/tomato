@@ -1,5 +1,8 @@
 #include "mainForm.h"
 #include "ui_mainForm.h"
+#include "pomodoroTimer.h"
+#include "settingsDialog.h"
+#include "settingsSerializer.h"
 #include <QTime>
 #include <QStatusBar>
 #include <QLabel>
@@ -22,34 +25,50 @@ MainForm::MainForm(QWidget* parent) :
     ui->timerDisplay->display(QString("--:--"));
     ui->timerDisplay->setSegmentStyle(QLCDNumber::SegmentStyle::Filled);
 
-    TimerSettings settings;
-    PomodoroTimer* pomoTimer = new PomodoroTimer(settings, this);
+    settingsSeializer_= new SettingsSerializer(qApp->organizationName(), qApp->applicationName(), this);
+    pomoTimer_ = new PomodoroTimer(settingsSeializer_->loadTimerSettings(), this);
 
     QLabel* pomoLabel = new QLabel(QString::fromUtf8("Pomo: "));
     pomoLabel->setStyleSheet(labelBarStyle);
-    pomoCount = new QLabel(QString());
-    pomoCount->setStyleSheet(labelBarStyle);
+    pomoCount_ = new QLabel(QString());
+    pomoCount_->setStyleSheet(labelBarStyle);
 
     QStatusBar* statusBar = new QStatusBar();
     statusBar->addPermanentWidget(pomoLabel);
-    statusBar->addPermanentWidget(pomoCount, 1);
+    statusBar->addPermanentWidget(pomoCount_, 1);
     statusBar->setStyleSheet(statusBarStyle);
     this->setStatusBar(statusBar);
     
     QToolBar* toolBar = addToolBar("toolBar");
     toolBar->setMovable(false);
     QAction* settingsAct = new QAction(QIcon(":/res/settings.png"), QString(), this);
+    settingsAct->setText("&Settings");
+    settingsAct->setToolTip("Settings");
+
+    connect(settingsAct, &QAction::triggered, this, &MainForm::openSettingsDialog);
     toolBar->addAction(settingsAct);
 
-    connect(pomoTimer, &PomodoroTimer::status, this, &MainForm::setState);
-    connect(ui->startButton, &QPushButton::clicked, pomoTimer, &PomodoroTimer::start);
-    connect(ui->stopButton, &QPushButton::clicked, pomoTimer, &PomodoroTimer::stop);
-    connect(ui->pauseButton, &QPushButton::clicked, pomoTimer, &PomodoroTimer::pause);
+    connect(pomoTimer_, &PomodoroTimer::status, this, &MainForm::setState);
+    connect(ui->startButton, &QPushButton::clicked, pomoTimer_, &PomodoroTimer::start);
+    connect(ui->stopButton, &QPushButton::clicked, pomoTimer_, &PomodoroTimer::stop);
+    connect(ui->pauseButton, &QPushButton::clicked, pomoTimer_, &PomodoroTimer::pause);
+
+    bool max;
+    restoreGeometry(settingsSeializer_->loadWindowSettings(max));
+    if (max) {
+        showMaximized();
+    }
 }
 
 MainForm::~MainForm()
 {
     delete ui;
+}
+
+void MainForm::closeEvent(QCloseEvent * override)
+{
+    settingsSeializer_->saveTimerSettings(pomoTimer_->settings());
+    settingsSeializer_->saveWindowSettings(saveGeometry(), isMaximized());
 }
 
 void MainForm::setState(const PomodoroStatus& s)
@@ -68,5 +87,17 @@ void MainForm::setState(const PomodoroStatus& s)
             break;
     }
 
-    pomoCount->setText(QString::number(s.pomo));
+    pomoCount_->setText(QString::number(s.pomo));
+}
+
+void MainForm::openSettingsDialog()
+{
+    const auto& curSettings = pomoTimer_->settings();
+    SettingsDialog* dialog = new SettingsDialog(curSettings, this);
+    if (dialog->exec() == QDialog::Accepted) {
+        TimerSettings newSettings = dialog->timerSettings();
+        if (curSettings != newSettings) {
+            pomoTimer_->setSettings(newSettings);
+        }
+    }
 }

@@ -62,6 +62,16 @@ PomodoroTimer::PomodoroTimer(const TimerSettings& s, QObject* parent) :
     initPlayer(player_, true);
 }
 
+TimerSettings PomodoroTimer::settings() const
+{
+    return settings_;
+}
+
+void PomodoroTimer::setSettings(const TimerSettings &s)
+{
+    settings_ = s;
+}
+
 void PomodoroTimer::setTime(const QTime&)
 {
     emit status({clock_->getTime(), state_, pomo_});

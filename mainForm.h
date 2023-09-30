@@ -1,12 +1,14 @@
 #pragma once
 #include <QMainWindow>
-#include "pomodoroTimer.h"
 
 namespace Ui {
     class MainForm;
 }
 
 class QLabel;
+class SettingsSerializer;
+class PomodoroTimer;
+struct PomodoroStatus;
 
 class MainForm : public QMainWindow
 {
@@ -15,10 +17,16 @@ public:
     explicit MainForm(QWidget* parent = nullptr);
     ~MainForm();
 
-public slots:
+protected:
+    void closeEvent(QCloseEvent* override);
+
+private slots:
     void setState(const PomodoroStatus&);
+    void openSettingsDialog();
 
 private:
     Ui::MainForm* ui;
-    QLabel* pomoCount;
+    PomodoroTimer* pomoTimer_;
+    QLabel* pomoCount_;
+    SettingsSerializer* settingsSeializer_;
 };

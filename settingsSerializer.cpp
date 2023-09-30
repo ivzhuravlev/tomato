@@ -43,6 +43,7 @@ TimerSettings SettingsSerializer::loadTimerSettings() const
     result.shortRestLength = settings_->value("shortRestLength").toTime();
     result.longRestLength = settings_->value("longRestLength").toTime();
     result.pomoTillRest = settings_->value("pomoTillRest").toInt();
+    settings_->endGroup();
     if (result.valid()) {
         return result;
     } else {

@@ -11,6 +11,11 @@ SettingsDialog::SettingsDialog(const TimerSettings& s, QWidget* parent)
     ui->tillLongSpin->setValue(s.pomoTillRest);
 }
 
+SettingsDialog::~SettingsDialog()
+{
+    delete ui;
+}
+
 TimerSettings SettingsDialog::timerSettings() const
 {
     return TimerSettings {

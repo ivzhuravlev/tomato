@@ -28,6 +28,9 @@ class PomodoroTimer : public QObject
 public:
     PomodoroTimer(const TimerSettings& s, QObject* parent = nullptr);
 
+    TimerSettings settings() const;
+    void setSettings(const TimerSettings& s);
+
 signals:
     void status(const PomodoroStatus& status);
     void nextState();

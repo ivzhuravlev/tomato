@@ -13,6 +13,7 @@ class SettingsDialog : public QDialog
     Q_OBJECT
 public:
     SettingsDialog(const TimerSettings& s, QWidget* parent = nullptr);
+    ~SettingsDialog();
 
     TimerSettings timerSettings() const;
 

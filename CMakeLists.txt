@@ -23,6 +23,7 @@ add_executable(tomato
     settingsSerializer.h
     settingsSerializer.cpp
     timerSettings.h
+    timerSettings.cpp
     resources.qrc
 )
 
