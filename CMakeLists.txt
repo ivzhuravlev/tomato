@@ -11,16 +11,18 @@ set(CMAKE_AUTORCC on)
 find_package(Qt5 COMPONENTS Core Widgets Multimedia REQUIRED)
 
 add_executable(tomato 
+    clock.h
+    clock.cpp
     main.cpp
     mainForm.h
     mainForm.cpp
     pomodoroTimer.h
     pomodoroTimer.cpp
-    clock.h
-    clock.cpp
-    timerSettings.h
+    settingsDialog.h
+    settingsDialog.cpp
     settingsSerializer.h
     settingsSerializer.cpp
+    timerSettings.h
     resources.qrc
 )
 
