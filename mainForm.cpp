@@ -49,7 +49,7 @@ MainForm::MainForm(QWidget* parent) :
     connect(resetAct, &QAction::triggered, [this](){ this->pomoTimer_->setPomo(0); });
     toolBar->addAction(resetAct);
 
-    QAction* settingsAct = new QAction(QIcon(":/res/settings.png"), QString());
+    QAction* settingsAct = new QAction(QIcon(":/res/settings.svg"), QString());
     settingsAct->setText("&Settings");
     settingsAct->setToolTip("Settings");
     connect(settingsAct, &QAction::triggered, this, &MainForm::openSettingsDialog);
