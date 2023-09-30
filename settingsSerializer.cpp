@@ -1,4 +1,5 @@
 #include <QSettings>
+#include <QtDebug>
 #include "settingsSerializer.h"
 
 SettingsSerializer::SettingsSerializer(const QString& org, const QString& app, QObject* parent)
@@ -37,5 +38,15 @@ void SettingsSerializer::saveTimerSettings(const TimerSettings& s)
 TimerSettings SettingsSerializer::loadTimerSettings() const
 {
     TimerSettings result;
-    return result;
+    settings_->beginGroup("TimerSettings");
+    result.pomoLength = settings_->value("pomoLength").toTime();
+    result.shortRestLength = settings_->value("shortRestLength").toTime();
+    result.longRestLength = settings_->value("longRestLength").toTime();
+    result.pomoTillRest = settings_->value("pomoTillRest").toInt();
+    if (result.valid()) {
+        return result;
+    } else {
+        qDebug() << "Settings is not valid";
+        return TimerSettings{};
+    }
 }
