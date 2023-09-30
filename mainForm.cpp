@@ -22,12 +22,14 @@ MainForm::MainForm(QWidget* parent) :
     QMainWindow(parent), ui(new Ui::MainForm)
 {
     ui->setupUi(this);
-    ui->timerDisplay->display(QString("--:--"));
-    ui->timerDisplay->setSegmentStyle(QLCDNumber::SegmentStyle::Filled);
 
     settingsSeializer_= new SettingsSerializer(qApp->organizationName(), qApp->applicationName(), this);
     pomoTimer_ = new PomodoroTimer(settingsSeializer_->loadTimerSettings(), this);
     pomoTimer_->setPomo(settingsSeializer_->loadDaySettings());
+
+    ui->timerDisplay->display(pomoTimer_->settings().pomoLength.toString(timeFormat));
+    ui->timerDisplay->setSegmentStyle(QLCDNumber::SegmentStyle::Filled);
+    ui->timerDisplay->setStyleSheet(clockStyleStop);
 
     QLabel* pomoLabel = new QLabel(QString::fromUtf8("Pomo: "));
     pomoLabel->setStyleSheet(labelBarStyle);
