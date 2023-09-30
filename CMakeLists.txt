@@ -18,6 +18,9 @@ add_executable(tomato
     pomodoroTimer.cpp
     clock.h
     clock.cpp
+    timerSettings.h
+    settingsSerializer.h
+    settingsSerializer.cpp
     resources.qrc
 )
 

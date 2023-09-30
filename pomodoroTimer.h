@@ -1,6 +1,7 @@
 #pragma once
 #include <QObject>
 #include <QTime>
+#include "timerSettings.h"
 
 class QTimer;
 class QStateMachine;
@@ -12,14 +13,6 @@ enum class PomodoroState
     Pomo,
     Break,
     Stop
-};
-
-struct TimerSettings
-{
-    QTime pomoLength = QTime(0,1);      // 25 min
-    QTime shortRestLength = QTime(0,1); // 5 min
-    QTime longRestLength = QTime(0,15); // 15 min
-    int pomoTillRest = 5;               // 5 items
 };
 
 struct PomodoroStatus
