@@ -154,6 +154,7 @@ void MainForm::openSettingsDialog()
         TimerSettings newSettings = dialog->timerSettings();
         if (curSettings != newSettings) {
             pomoTimer_->setSettings(newSettings);
+            settingsSeializer_->saveTimerSettings(newSettings);
         }
     }
 }
