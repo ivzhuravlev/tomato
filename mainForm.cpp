@@ -48,12 +48,30 @@ MainForm::MainForm(QWidget* parent) :
     QToolBar* toolBar = addToolBar("toolBar");
     toolBar->setMovable(false);
 
+    QAction* startAct = new QAction(QIcon(":res/play.svg"), QString());
+    startAct->setText("Start");
+    startAct->setToolTip("Start pomo timer");
+    connect(startAct, &QAction::triggered, pomoTimer_, &PomodoroTimer::start);
+    toolBar->addAction(startAct);
+
+    QAction* pauseAct = new QAction(QIcon(":res/pause.svg"), QString());
+    pauseAct->setText("Pause");
+    pauseAct->setToolTip("Pause pomo timer");
+    connect(pauseAct, &QAction::triggered, pomoTimer_, &PomodoroTimer::pause);
+    toolBar->addAction(pauseAct);
+
+    QAction* stopAct = new QAction(QIcon(":res/stop.svg"), QString());
+    stopAct->setText("Stop");
+    stopAct->setToolTip("Stop pomo timer");
+    connect(stopAct, &QAction::triggered, pomoTimer_, &PomodoroTimer::stop);
+    toolBar->addAction(stopAct);
+    
     QAction* resetAct = new QAction(QIcon(":/res/reset.svg"), QString());
     resetAct->setText("&Reset count");
     resetAct->setToolTip("Reset pomo count");
     connect(resetAct, &QAction::triggered, [this](){ this->pomoTimer_->setPomo(0); });
     toolBar->addAction(resetAct);
-
+    
     QAction* settingsAct = new QAction(QIcon(":/res/settings.svg"), QString());
     settingsAct->setText("&Settings");
     settingsAct->setToolTip("Settings");
@@ -71,6 +89,9 @@ MainForm::MainForm(QWidget* parent) :
             pomoTimer_->settings().pomoLength.toString(timeFormat));
         QMenu* trayMenu = new QMenu(this);
         trayMenu->addAction(trayInfo_);
+        trayMenu->addAction(startAct);
+        trayMenu->addAction(pauseAct);
+        trayMenu->addAction(stopAct);
         trayMenu->addAction(resetAct);
         trayMenu->addAction(settingsAct);
         tray_->setContextMenu(trayMenu);

@@ -7,5 +7,8 @@
         <file>res/circle_pomo.svg</file>
         <file>res/circle_rest.svg</file>
         <file>res/circle_stop.svg</file>
+        <file>res/play.svg</file>
+        <file>res/pause.svg</file>
+        <file>res/stop.svg</file>
     </qresource>
 </RCC>
