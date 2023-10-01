@@ -105,6 +105,7 @@ MainForm::MainForm(QWidget* parent) :
     if (max) {
         showMaximized();
     }
+    setWindowIcon(QIcon(":/res/tray.svg"));
 }
 
 MainForm::~MainForm()
