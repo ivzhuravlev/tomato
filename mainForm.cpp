@@ -9,6 +9,8 @@
 #include <QAction>
 #include <QToolBar>
 #include <QMenu>
+#include <QSystemTrayIcon>
+#include <QtDebug>
 
 static const QString timeFormat = QString("mm:ss");
 
@@ -47,6 +49,7 @@ MainForm::MainForm(QWidget* parent) :
     toolBar->setMovable(false);
 
     QAction* resetAct = new QAction(QIcon(":/res/reset.svg"), QString());
+    resetAct->setText("&Reset count");
     resetAct->setToolTip("Reset pomo count");
     connect(resetAct, &QAction::triggered, [this](){ this->pomoTimer_->setPomo(0); });
     toolBar->addAction(resetAct);
@@ -61,6 +64,20 @@ MainForm::MainForm(QWidget* parent) :
     connect(ui->startButton, &QPushButton::clicked, pomoTimer_, &PomodoroTimer::start);
     connect(ui->stopButton, &QPushButton::clicked, pomoTimer_, &PomodoroTimer::stop);
     connect(ui->pauseButton, &QPushButton::clicked, pomoTimer_, &PomodoroTimer::pause);
+
+    if (QSystemTrayIcon::isSystemTrayAvailable()) {
+        tray_ = new QSystemTrayIcon(QIcon(":/res/tray.svg"), this);
+        trayInfo_ = new QAction(QIcon(":/res/circle_stop.svg"),
+            pomoTimer_->settings().pomoLength.toString(timeFormat));
+        QMenu* trayMenu = new QMenu(this);
+        trayMenu->addAction(trayInfo_);
+        trayMenu->addAction(resetAct);
+        trayMenu->addAction(settingsAct);
+        tray_->setContextMenu(trayMenu);
+        tray_->show();
+    } else {
+        qDebug() << "tray is unavailble";
+    }
 
     bool max;
     restoreGeometry(settingsSeializer_->loadWindowSettings(max));
@@ -83,21 +100,29 @@ void MainForm::closeEvent(QCloseEvent * override)
 
 void MainForm::setState(const PomodoroStatus& s)
 {
-    ui->timerDisplay->display(s.time.toString(timeFormat));
+    const QString time = s.time.toString(timeFormat);
+    ui->timerDisplay->display(time);
 
     switch (s.state) {
         case PomodoroState::Pomo:
             ui->timerDisplay->setStyleSheet(clockStylePomo);
+            if (tray_) trayInfo_->setIcon(QIcon(":/res/circle_pomo.svg"));
             break;
         case PomodoroState::Break:
             ui->timerDisplay->setStyleSheet(clockStyleBreak);
+            if (tray_) trayInfo_->setIcon(QIcon(":/res/circle_rest.svg"));
             break;
         case PomodoroState::Stop:
             ui->timerDisplay->setStyleSheet(clockStyleStop);
+            if (tray_) trayInfo_->setIcon(QIcon(":/res/circle_stop.svg"));
             break;
     }
 
     pomoCount_->setText(QString::number(s.pomo));
+
+    if (tray_) {
+        trayInfo_->setText(time);
+    }
 }
 
 void MainForm::openSettingsDialog()

@@ -6,6 +6,8 @@ namespace Ui {
 }
 
 class QLabel;
+class QAction;
+class QSystemTrayIcon;
 class SettingsSerializer;
 class PomodoroTimer;
 struct PomodoroStatus;
@@ -29,4 +31,6 @@ private:
     PomodoroTimer* pomoTimer_;
     QLabel* pomoCount_;
     SettingsSerializer* settingsSeializer_;
+    QSystemTrayIcon* tray_;
+    QAction* trayInfo_;
 };
