@@ -28,6 +28,7 @@ MainForm::MainForm(QWidget* parent) :
     settingsSeializer_= new SettingsSerializer(qApp->organizationName(), qApp->applicationName(), this);
     pomoTimer_ = new PomodoroTimer(settingsSeializer_->loadTimerSettings(), this);
     pomoTimer_->setPomo(settingsSeializer_->loadDaySettings());
+    connect(pomoTimer_, &PomodoroTimer::status, this, &MainForm::setState);
 
     ui->timerDisplay->display(pomoTimer_->settings().pomoLength.toString(timeFormat));
     ui->timerDisplay->setSegmentStyle(QLCDNumber::SegmentStyle::Filled);
@@ -77,11 +78,6 @@ MainForm::MainForm(QWidget* parent) :
     settingsAct->setToolTip("Settings");
     connect(settingsAct, &QAction::triggered, this, &MainForm::openSettingsDialog);
     toolBar->addAction(settingsAct);
-
-    connect(pomoTimer_, &PomodoroTimer::status, this, &MainForm::setState);
-    connect(ui->startButton, &QPushButton::clicked, pomoTimer_, &PomodoroTimer::start);
-    connect(ui->stopButton, &QPushButton::clicked, pomoTimer_, &PomodoroTimer::stop);
-    connect(ui->pauseButton, &QPushButton::clicked, pomoTimer_, &PomodoroTimer::pause);
 
     if (QSystemTrayIcon::isSystemTrayAvailable()) {
         tray_ = new QSystemTrayIcon(QIcon(":/res/tray.svg"), this);
