@@ -85,6 +85,7 @@ MainForm::MainForm(QWidget* parent) :
             pomoTimer_->settings().pomoLength.toString(timeFormat));
         QMenu* trayMenu = new QMenu(this);
         trayMenu->addAction(trayInfo_);
+        trayMenu->addSeparator();
         trayMenu->addAction(startAct);
         trayMenu->addAction(pauseAct);
         trayMenu->addAction(stopAct);
