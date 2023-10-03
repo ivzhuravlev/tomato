@@ -72,6 +72,11 @@ MainForm::MainForm(QWidget* parent) :
     resetAct->setToolTip("Reset pomo count");
     connect(resetAct, &QAction::triggered, [this](){ this->pomoTimer_->setPomo(0); });
     toolBar->addAction(resetAct);
+
+    QAction* listAct = new QAction(QIcon(":/res/memo.svg"), QString());
+    listAct->setText("&List");
+    listAct->setToolTip("Pomodoro list");
+    toolBar->addAction(listAct);
     
     QAction* settingsAct = new QAction(QIcon(":/res/settings.svg"), QString());
     settingsAct->setText("&Settings");

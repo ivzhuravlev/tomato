@@ -10,5 +10,6 @@
         <file>res/play.svg</file>
         <file>res/pause.svg</file>
         <file>res/stop.svg</file>
+        <file>res/memo.svg</file>
     </qresource>
 </RCC>
