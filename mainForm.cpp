@@ -85,7 +85,7 @@ MainForm::MainForm(QWidget* parent) :
     toolBar->addAction(settingsAct);
 
     if (QSystemTrayIcon::isSystemTrayAvailable()) {
-        tray_ = new QSystemTrayIcon(QIcon(":/res/tray.svg"), this);
+        tray_ = new QSystemTrayIcon(QIcon(":/res/tomato.svg"), this);
         trayInfo_ = new QAction(QIcon(":/res/circle_stop.svg"),
             pomoTimer_->settings().pomoLength.toString(timeFormat));
         QMenu* trayMenu = new QMenu(this);
@@ -107,7 +107,7 @@ MainForm::MainForm(QWidget* parent) :
     if (max) {
         showMaximized();
     }
-    setWindowIcon(QIcon(":/res/tray.svg"));
+    setWindowIcon(QIcon(":/res/tomato.svg"));
 }
 
 MainForm::~MainForm()
@@ -130,15 +130,24 @@ void MainForm::setState(const PomodoroStatus& s)
     switch (s.state) {
         case PomodoroState::Pomo:
             ui->timerDisplay->setStyleSheet(clockStylePomo);
-            if (tray_) trayInfo_->setIcon(QIcon(":/res/circle_pomo.svg"));
+            if (tray_) {
+                tray_->setIcon(QIcon(":/res/tomato.svg"));
+                trayInfo_->setIcon(QIcon(":/res/circle_pomo.svg"));
+            }
             break;
         case PomodoroState::Break:
             ui->timerDisplay->setStyleSheet(clockStyleBreak);
-            if (tray_) trayInfo_->setIcon(QIcon(":/res/circle_rest.svg"));
+            if (tray_) {
+                tray_->setIcon(QIcon(":/res/tomato_rest.svg"));
+                trayInfo_->setIcon(QIcon(":/res/circle_rest.svg"));
+            }
             break;
         case PomodoroState::Stop:
             ui->timerDisplay->setStyleSheet(clockStyleStop);
-            if (tray_) trayInfo_->setIcon(QIcon(":/res/circle_stop.svg"));
+            if (tray_) {
+                tray_->setIcon(QIcon(":/res/tomato_stop.svg"));
+                trayInfo_->setIcon(QIcon(":/res/circle_stop.svg"));
+            }
             break;
     }
 

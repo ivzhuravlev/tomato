@@ -3,7 +3,6 @@
         <file>res/settings.png</file>
         <file>res/reset.svg</file>
         <file>res/settings.svg</file>
-        <file>res/tray.svg</file>
         <file>res/circle_pomo.svg</file>
         <file>res/circle_rest.svg</file>
         <file>res/circle_stop.svg</file>
@@ -11,5 +10,8 @@
         <file>res/pause.svg</file>
         <file>res/stop.svg</file>
         <file>res/memo.svg</file>
+        <file>res/tomato.svg</file>
+        <file>res/tomato_stop.svg</file>
+        <file>res/tomato_rest.svg</file>
     </qresource>
 </RCC>
