@@ -76,6 +76,7 @@ MainForm::MainForm(QWidget* parent) :
     QAction* listAct = new QAction(QIcon(":/res/memo.svg"), QString());
     listAct->setText("&List");
     listAct->setToolTip("Pomodoro list");
+    listAct->setVisible(false);
     toolBar->addAction(listAct);
     
     QAction* settingsAct = new QAction(QIcon(":/res/settings.svg"), QString());
