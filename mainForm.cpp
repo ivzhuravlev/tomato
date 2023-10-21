@@ -3,6 +3,7 @@
 #include "pomodoroTimer.h"
 #include "settingsDialog.h"
 #include "settingsSerializer.h"
+#include "pomoListWidget.h"
 #include <QTime>
 #include <QStatusBar>
 #include <QLabel>
@@ -76,7 +77,7 @@ MainForm::MainForm(QWidget* parent) :
     QAction* listAct = new QAction(QIcon(":/res/memo.svg"), QString());
     listAct->setText("&List");
     listAct->setToolTip("Pomodoro list");
-    listAct->setVisible(false);
+    // listAct->setVisible(false);
     toolBar->addAction(listAct);
     
     QAction* settingsAct = new QAction(QIcon(":/res/settings.svg"), QString());
@@ -84,6 +85,11 @@ MainForm::MainForm(QWidget* parent) :
     settingsAct->setToolTip("Settings");
     connect(settingsAct, &QAction::triggered, this, &MainForm::openSettingsDialog);
     toolBar->addAction(settingsAct);
+
+    pomoList_ = new PomoListWidget(this);
+    ui->verticalLayout->addWidget(pomoList_, -1);
+    pomoList_->setVisible(false);
+    connect(listAct, &QAction::triggered, this, &MainForm::openPomoList);
 
     if (QSystemTrayIcon::isSystemTrayAvailable()) {
         tray_ = new QSystemTrayIcon(QIcon(":/res/tomato.svg"), this);
@@ -170,4 +176,17 @@ void MainForm::openSettingsDialog()
             settingsSeializer_->saveTimerSettings(newSettings);
         }
     }
+}
+
+void MainForm::openPomoList()
+{
+    // алгоритм
+    // взять вертикальный размер и умножить на 2
+    // либо поделить на 2
+    // QRect geom = geometry();
+    // if (this->pomoList_->isVisible()) {
+    //     geom.
+    // }
+
+    this->pomoList_->setVisible(!this->pomoList_->isVisible());
 }

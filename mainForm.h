@@ -10,6 +10,7 @@ class QAction;
 class QSystemTrayIcon;
 class SettingsSerializer;
 class PomodoroTimer;
+class PomoListWidget;
 struct PomodoroStatus;
 
 class MainForm : public QMainWindow
@@ -25,10 +26,12 @@ protected:
 private slots:
     void setState(const PomodoroStatus&);
     void openSettingsDialog();
+    void openPomoList();
 
 private:
     Ui::MainForm* ui;
     PomodoroTimer* pomoTimer_;
+    PomoListWidget* pomoList_;
     QLabel* pomoCount_;
     SettingsSerializer* settingsSeializer_;
     QSystemTrayIcon* tray_;

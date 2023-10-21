@@ -18,6 +18,7 @@ add_executable(tomato
     mainForm.cpp
     pomodoroTimer.h
     pomodoroTimer.cpp
+    pomoListWidget.h
     settingsDialog.h
     settingsDialog.cpp
     settingsSerializer.h
