@@ -19,6 +19,7 @@ add_executable(tomato
     pomodoroTimer.h
     pomodoroTimer.cpp
     pomoListWidget.h
+    pomoListWidget.cpp
     settingsDialog.h
     settingsDialog.cpp
     settingsSerializer.h
