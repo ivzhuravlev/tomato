@@ -20,8 +20,11 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QLCDNumber" name="timerDisplay">
-      <property name="layoutDirection">
-       <enum>Qt::LeftToRight</enum>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
       </property>
      </widget>
     </item>

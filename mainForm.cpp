@@ -87,7 +87,7 @@ MainForm::MainForm(QWidget* parent) :
     toolBar->addAction(settingsAct);
 
     pomoList_ = new PomoListWidget(this);
-    ui->verticalLayout->addWidget(pomoList_, -1);
+    ui->verticalLayout->addWidget(pomoList_, 0, Qt::AlignBottom);
     pomoList_->setVisible(false);
     connect(listAct, &QAction::triggered, this, &MainForm::openPomoList);
 
@@ -188,5 +188,13 @@ void MainForm::openPomoList()
     //     geom.
     // }
 
-    this->pomoList_->setVisible(!this->pomoList_->isVisible());
+    QRect geom = geometry();
+    if (this->pomoList_->isVisible()) {
+        geom.setHeight(geom.height() - pomoList_->specSize());
+        this->pomoList_->setVisible(false);
+    } else {
+        geom.setHeight(geom.height() + pomoList_->specSize());
+        this->pomoList_->setVisible(true);
+    }
+
 }

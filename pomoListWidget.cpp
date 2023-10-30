@@ -22,4 +22,16 @@ PomoListWidget::PomoListWidget(QWidget* parent) :
     layout->addWidget(tView);
 
     setLayout(layout);
+    setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+}
+
+QSize PomoListWidget::sizeHint() const
+{
+    return QSize(0, 300);
+}
+
+int PomoListWidget::specSize() const
+{
+    static int size = 300;
+    return size;
 }
